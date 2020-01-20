@@ -1,4 +1,4 @@
-module github.com/zyuskin/jira
+module github.com/utrace-ltd/jira-release-updater
 
 go 1.13
 
