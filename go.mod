@@ -8,6 +8,6 @@ require (
 	github.com/mitchellh/gox v1.0.1 // indirect
 	github.com/spf13/viper v1.6.1
 	github.com/tsuyoshiwada/go-gitcmd v0.0.0-20180205145712-5f1f5f9475df // indirect
-	github.com/utrace-ltd/changelogger v0.0.0-20200117041744-3c23492eca51
+	github.com/utrace-ltd/changelogger v0.0.0-20200122102053-9d9663bf4ecb
 	github.com/voxelbrain/goptions v0.0.0-20180630082107-58cddc247ea2
 )

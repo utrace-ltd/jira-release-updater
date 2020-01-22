@@ -114,6 +114,8 @@ github.com/tsuyoshiwada/go-gitcmd v0.0.0-20180205145712-5f1f5f9475df/go.mod h1:p
 github.com/ugorji/go v1.1.4/go.mod h1:uQMGLiO92mf5W77hV/PUCpI3pbzQx3CRekS0kk+RGrc=
 github.com/utrace-ltd/changelogger v0.0.0-20200117041744-3c23492eca51 h1:sjRukT+4to/vJzoOtJnp/g4mEYQcCZIpr/Z917L5Z98=
 github.com/utrace-ltd/changelogger v0.0.0-20200117041744-3c23492eca51/go.mod h1:20gWZlVUszoNkpZWwldkUsFrTAaoTrtTPilFoAIy6a0=
+github.com/utrace-ltd/changelogger v0.0.0-20200122102053-9d9663bf4ecb h1:TPgYqoM3fxyPuiitn54yvBrdRvwVqYDgnhXNbmMMuSU=
+github.com/utrace-ltd/changelogger v0.0.0-20200122102053-9d9663bf4ecb/go.mod h1:20gWZlVUszoNkpZWwldkUsFrTAaoTrtTPilFoAIy6a0=
 github.com/voxelbrain/goptions v0.0.0-20180630082107-58cddc247ea2 h1:txplJASvd6b/hrE0s/Ixfpp2cuwH9IO9oZBAN9iYa4A=
 github.com/voxelbrain/goptions v0.0.0-20180630082107-58cddc247ea2/go.mod h1:DGCIhurYgnLz8J9ga1fMV/fbLDyUvTyrWXVWUIyJon4=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=

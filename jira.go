@@ -27,23 +27,19 @@ func main() {
 		log.Panicf("Error on parsh base url: %s", err)
 	}
 
-	gitVersions, err := changelogger.NewChangeLogger().GetChangeLog(opt.Version)
+	gitVersion, err := changelogger.NewChangeLogger().GetVersionChangeLog(opt.Version)
 	if err != nil {
 		log.Panicf("Error on get git versions on tag %s: %s", opt.Version, err)
 	}
 
-	if len(gitVersions) == 0 {
-		log.Panic("Error, no git versions")
-	}
-
-	issues := getIssueFromChangeLog(gitVersions[0], config.Jira.Issue.Pattern)
+	issues := getIssueFromChangeLog(gitVersion, config.Jira.Issue.Pattern)
 
 	project, _, err := jiraClient.Project.Get(config.Jira.Project.Id)
 	if err != nil {
 		log.Panicf("Error on get project by id (%s): %s", config.Jira.Project.Id, err)
 	}
 
-	jiraVersion, err := findOrCreateVersion(project, createVersionName(opt.ComponentName, opt.Version), gitVersions[0].Tag.Date, jiraClient)
+	jiraVersion, err := findOrCreateVersion(project, createVersionName(opt.ComponentName, opt.Version), gitVersion.Tag.Date, jiraClient)
 	if err != nil {
 		log.Panicf("Error on create/get version: %s", err)
 	}
@@ -64,7 +60,7 @@ func findOrCreateVersion(p *jira.Project, name string, rd time.Time, c *jira.Cli
 		Archived:    false,
 		ProjectID:   pid,
 		ReleaseDate: rd.String(),
-		Released:    false,
+		Released:    true,
 	}
 
 	v, _, err := c.Version.Create(&n)
@@ -95,6 +91,7 @@ func updateTasksVersions(v *jira.Version, issues []string, c *jira.Client) {
 		issue, _, err := c.Issue.Get(i, nil)
 		if err != nil {
 			log.Printf("Error on get issue by name: %s", err)
+			continue
 		}
 		data := creatIssueDataFromIssue(issue)
 		needSave := syncIssueVersions(data, v)
@@ -114,7 +111,7 @@ func syncIssueVersions(i *jira.Issue, v *jira.Version) bool {
 		}
 	}
 	i.Fields.FixVersions = append(i.Fields.FixVersions, createFixVersionFromVersion(v))
-	log.Printf("In issue %s add version %s", i.Key, v.Name)
+	log.Printf("Attach version %s to issue %s", v.Name, i.Key)
 	return true
 }
 
