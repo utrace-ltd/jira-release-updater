@@ -3,37 +3,40 @@ package main
 import "github.com/spf13/viper"
 
 type Config struct {
-	Jira struct{
-		URL string
-		User string
+	Jira struct {
+		URL      string
+		User     string
 		Password string
-		Project struct{
+		Project  struct {
 			Id string
 		}
-		Issue struct{
+		Issue struct {
 			Pattern string
 		}
 	}
 }
 
-func NewConfig() (*Config, error)  {
+func NewConfig() (*Config, error) {
 	config := &Config{}
-	viper.SetDefault("jira.url", "https://utrace.atlassian.net")
-	viper.SetDefault("jira.user", "user@utrace.ru")
-	viper.SetDefault("jira.password", "secret")
-	viper.SetDefault("jira.project.id", "10001")
-	viper.SetDefault("jira.issue.pattern", "(ISSUE-+.)")
 
-	viper.AutomaticEnv()
+	v := viper.NewWithOptions(viper.KeyDelimiter("_"))
 
-	viper.SetConfigName("config")
-	viper.AddConfigPath("/etc/jira-release-updater/")
-	viper.AddConfigPath("$HOME/.jira-release-updater/")
-	viper.AddConfigPath(".")
+	v.SetDefault("jira_url", "https://utrace.atlassian.net")
+	v.SetDefault("jira_user", "user@utrace.ru")
+	v.SetDefault("jira_password", "secret")
+	v.SetDefault("jira_project_id", "10001")
+	v.SetDefault("jira_issue_pattern", "(ISSUE-+.)")
 
-	_ = viper.ReadInConfig()
+	v.AutomaticEnv()
 
-	err := viper.Unmarshal(config)
+	v.SetConfigName("config")
+	v.AddConfigPath("/etc/jira-release-updater/")
+	v.AddConfigPath("$HOME/.jira-release-updater/")
+	v.AddConfigPath(".")
+
+	_ = v.ReadInConfig()
+
+	err := v.Unmarshal(config)
 	if err != nil {
 		return nil, err
 	}
