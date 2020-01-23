@@ -22,17 +22,15 @@ func main() {
 		log.Panicf("Error on config load: %s", err)
 	}
 
-	jiraClient, err := jira.NewClient(createHttpClient(config), config.Jira.URL)
-	if err != nil {
-		log.Panicf("Error on parsh base url: %s", err)
-	}
-
 	gitVersion, err := changelogger.NewChangeLogger().GetVersionChangeLog(opt.Version)
 	if err != nil {
 		log.Panicf("Error on get git versions on tag %s: %s", opt.Version, err)
 	}
 
-	issues := getIssueFromChangeLog(gitVersion, config.Jira.Issue.Pattern)
+	jiraClient, err := jira.NewClient(createHttpClient(config), config.Jira.URL)
+	if err != nil {
+		log.Panicf("Error on parsh base url: %s", err)
+	}
 
 	project, _, err := jiraClient.Project.Get(config.Jira.Project.Id)
 	if err != nil {
@@ -43,6 +41,8 @@ func main() {
 	if err != nil {
 		log.Panicf("Error on create/get version: %s", err)
 	}
+
+	issues := getIssueFromChangeLog(gitVersion, config.Jira.Issue.Pattern)
 
 	updateTasksVersions(jiraVersion, issues, jiraClient)
 }
